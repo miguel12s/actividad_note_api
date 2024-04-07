@@ -26,14 +26,19 @@ class NoteActivity : AppCompatActivity() {
         inp_title=findViewById(R.id.title_note_final)
         inp_content=findViewById(R.id.contenido_note_final)
 
+
+
         val id_note = intent.getLongExtra("id_note", 0L)
-        intent.getStringExtra("title")?.let {
+
+
+        /*intent.getStringExtra("title")?.let {
             inp_title.setText(it)
         }
 
         intent.getStringExtra("contenido")?.let {
             inp_content.setText(it)
-        }
+        }*/
+
 
 //        findViewById<Button>(R.id.btn_edit_note_full).setOnClickListener {
 //            val intent = Intent(it.context, EditNoteActivity::class.java)

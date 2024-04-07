@@ -1,5 +1,4 @@
 package com.example.parcial_2_jg.ui.viewModels
-
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -8,6 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.parcial_2_jg.data.model.NoteModel
 import com.example.parcial_2_jg.data.repository.NoteRepository
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class NoteViewModels(application: Application):AndroidViewModel(application){
 
@@ -18,12 +20,34 @@ class NoteViewModels(application: Application):AndroidViewModel(application){
         get() = _noteList
 
     fun getNotes(){
-        viewModelScope.launch {
-            val notes = noteRepository.getNotes()
-            _noteList.value = notes
-        }
-    }
 
+        viewModelScope.launch {
+          val notes=noteRepository.getNotes().enqueue(
+              object: Callback<List<NoteModel>> {
+                  override fun onResponse(
+                      call: Call<List<NoteModel>>,
+                      response: Response<List<NoteModel>>
+                  ) {
+
+                    if (response.isSuccessful){
+                            _noteList.value=response.body()
+                        }
+                  }
+
+                  override fun onFailure(call: Call<List<NoteModel>>, t: Throwable) {
+                      Log.d("Error", t.toString())
+                  }
+
+
+              }
+
+          )
+        }
+        }
+
+
+
+/*
     fun updateNote(nid:Long, title:String, description:String){
         viewModelScope.launch {
             val note = NoteModel(nid, title, description)
@@ -44,4 +68,6 @@ class NoteViewModels(application: Application):AndroidViewModel(application){
             noteRepository.insertNote(note)
         }
     }
+    */
+
 }

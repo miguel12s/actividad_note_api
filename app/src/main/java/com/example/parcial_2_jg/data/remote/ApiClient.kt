@@ -1,0 +1,15 @@
+package com.example.parcial_2_jg.data.remote
+
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class ApiClient {
+    private val retrofit = Retrofit
+        .Builder()
+        .baseUrl("https://movie.danydev.co/api/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    fun getApiService():ApiService{
+        return retrofit.create(ApiService::class.java)
+    }
+}

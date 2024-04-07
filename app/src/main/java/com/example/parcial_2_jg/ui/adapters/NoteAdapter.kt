@@ -49,7 +49,7 @@ class NoteAdapter (private val notes:List<NoteModel>, private val noteViewModel:
 
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, NoteActivity::class.java)
-            intent.putExtra("id_note", note.nid)
+            intent.putExtra("id_note", note.id)
             intent.putExtra("title", note.title)
             intent.putExtra("contenido", note.content)
             it.context.startActivity(intent)
@@ -58,7 +58,7 @@ class NoteAdapter (private val notes:List<NoteModel>, private val noteViewModel:
         holder.itemView.findViewById<Button>(R.id.btn_edit_note_view)
             .setOnClickListener {
                 val intent = Intent(it.context, EditNoteActivity::class.java)
-                intent.putExtra("id_note", note.nid)
+                intent.putExtra("id_note", note.id)
                 intent.putExtra("title", note.title)
                 intent.putExtra("contenido", note.content)
                 it.context.startActivity(intent)
@@ -66,10 +66,10 @@ class NoteAdapter (private val notes:List<NoteModel>, private val noteViewModel:
             }
 
 
-        holder.itemView.findViewById<Button>(R.id.btn_delete_note_view)
+       /* holder.itemView.findViewById<Button>(R.id.btn_delete_note_view)
             .setOnClickListener {
                 noteViewModel.deleteNote(note)
             }
-
+*/
     }
 }
