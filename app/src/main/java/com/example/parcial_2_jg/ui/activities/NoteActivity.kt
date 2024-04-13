@@ -3,6 +3,7 @@ package com.example.parcial_2_jg.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.MultiAutoCompleteTextView
@@ -28,8 +29,15 @@ class NoteActivity : AppCompatActivity() {
 
 
 
-        val id_note = intent.getLongExtra("id_note", 0L)
+        val id_note = intent.getIntExtra("id_note", 0)
+        noteViewModel.getNoteById(id_note)
 
+        noteViewModel.note.observe(this) {
+    Log.d("NoteActivity", "Nota: $it")
+    inp_title.text = it.title
+    inp_content.text = it.content
+}
+        Log.d("NoteActivity", "Nota: $id_note")
 
         /*intent.getStringExtra("title")?.let {
             inp_title.setText(it)

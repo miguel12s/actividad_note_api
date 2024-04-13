@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NoteViewModels(application: Application):AndroidViewModel(application){
+class NoteViewModels(application: Application):AndroidViewModel(application) {
 
     private val noteRepository = NoteRepository(application)
 
@@ -19,31 +19,59 @@ class NoteViewModels(application: Application):AndroidViewModel(application){
     val noteList: MutableLiveData<List<NoteModel>>
         get() = _noteList
 
-    fun getNotes(){
+    private val _note = MutableLiveData<NoteModel>()
+    val note: MutableLiveData<NoteModel>
+        get() = _note
+
+    fun getNoteById(id: Int) {
+        viewModelScope.launch {
+        val note=    noteRepository.getNoteById(id).enqueue(
+                object : Callback<NoteModel> {
+                    override fun onResponse(
+                        call: Call<NoteModel>,
+                        response: Response<NoteModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            _note.value = response.body()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<NoteModel>, t: Throwable) {
+                        Log.d("Error", t.toString())
+                    }
+
+                }
+            )
+        }
+    }
+
+    fun getNotes() {
 
         viewModelScope.launch {
-          val notes=noteRepository.getNotes().enqueue(
-              object: Callback<List<NoteModel>> {
-                  override fun onResponse(
-                      call: Call<List<NoteModel>>,
-                      response: Response<List<NoteModel>>
-                  ) {
+            val notes = noteRepository.getNotes().enqueue(
+                object : Callback<List<NoteModel>> {
+                    override fun onResponse(
+                        call: Call<List<NoteModel>>,
+                        response: Response<List<NoteModel>>
+                    ) {
 
-                    if (response.isSuccessful){
-                            _noteList.value=response.body()
+                        if (response.isSuccessful) {
+                            _noteList.value = response.body()
                         }
-                  }
+                    }
 
-                  override fun onFailure(call: Call<List<NoteModel>>, t: Throwable) {
-                      Log.d("Error", t.toString())
-                  }
+                    override fun onFailure(call: Call<List<NoteModel>>, t: Throwable) {
+                        Log.d("Error", t.toString())
+                    }
 
 
-              }
+                }
 
-          )
+            )
+
         }
-        }
+    }
+}
 
 
 
@@ -70,4 +98,3 @@ class NoteViewModels(application: Application):AndroidViewModel(application){
     }
     */
 
-}

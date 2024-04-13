@@ -21,8 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_weight="1" />
 
 <!--            <Button-->
 <!--                android:id="@+id/btn_edit_note_full"-->
@@ -44,8 +43,7 @@
             android:id="@+id/contenido_note_final"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="TextView" />
+            android:layout_margin="20dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
